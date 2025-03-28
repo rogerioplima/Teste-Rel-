@@ -91,6 +91,7 @@ header {
     justify-content: center;
     gap: 8px;
     border-bottom: 3px solid transparent;
+    flex-wrap: wrap;
 }
 
 .tab-icon {
@@ -294,6 +295,7 @@ tr:hover {
     justify-content: center;
     gap: 10px;
     border-bottom: 3px solid var(--accent-yellow);
+    flex-wrap: wrap;
 }
 
 .btn-icon {
