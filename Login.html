@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulário de Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      width: 300px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .campo {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      height: 40px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .botao {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    input[type="submit"] {
+      width: 100px;
+      height: 40px;
+      padding: 10px;
+      background-color: #0055a4;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0b0470;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sistema de Ensaios de Relés de Proteção</h2>
+    <form id="form-login">
+      <div class="campo">
+        <label for="usuario">Usuário:</label>
+        <input type="text" id="usuario" name="usuario" required>
+      </div>
+      <div class="campo">
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+      </div>
+      <div class="botao">
+        <input type="submit" value="Entrar">
+      </div>
+    </form>
+    <div id="mensagem"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('form-login');
+    const mensagem = document.getElementById('mensagem');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const usuario = document.getElementById('usuario').value;
+      const senha = document.getElementById('senha').value;
+
+      // Verificar se as credenciais são válidas
+      if (usuario === 'Rogerio' && senha === '621073') {
+        mensagem.innerHTML = 'Login efetuado com sucesso!';
+        // Redirecionar para outra página após 1 segundos
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1000);
+      } else {
+        mensagem.innerHTML = 'Usuário ou senha inválidos!';
+      }
+    });
+  </script>
+</body>
+</html>

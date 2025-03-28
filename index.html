@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Ensaios de Relés de Proteção</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="Imagem1.png" alt="Logo" class="logo">
+                <div class="title-container">
+                    <h1>Sistema de Ensaios de Relés de Proteção</h1>
+                    <p class="subtitle">Análise e Verificação de Curvas Características</p>
+                </div>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="time-curves">
+                <span class="tab-icon">⚡</span>
+                Curvas de Tempo
+            </button>
+            
+        </nav>
+
+        <main class="tab-container">
+            <section id="time-curves" class="tab-content active">
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3>Dados do Ensaio</h3>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="client">Nome do cliente:</label>
+                            <input type="text" id="client" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="relay-model">Fabricante/ Modelo do Relé:</label>
+                            <input type="text" id="relay-model" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="serial-number">Número de Série:</label>
+                            <input type="text" id="serial-number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="test-date">Data do Ensaio:</label>
+                            <input type="date" id="test-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="calibration-box">Caixa de calibração: (Fabricante/Tipo/nº de série)</label>
+                            <input type="text" id="Tipo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="test-type">Tipo de Ensaio:</label>
+                            <select id="test-type" required>
+                                <option value="">Selecione o tipo de ensaio</option>
+                                <option value="pickup">Pickup</option>
+                                <option value="timing">Temporização</option>
+                                <option value="differential">Diferencial</option>
+                                <option value="distance">Distância</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3>Parâmetros da Curva</h3>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="curve-type">Tipo de Curva:</label>
+                            <select id="curve-type" required>
+                                <optgroup label="Curvas IEC">
+                                    <option value="iec-standard-inverse">Padrão Inversa (SI)</option>
+                                    <option value="iec-very-inverse">Muito Inversa (VI)</option>
+                                    <option value="iec-extremely-inverse">Extremamente Inversa (EI)</option>
+                                    <option value="iec-ultra-inverse">Ultra Inversa (UI)</option>
+                                    <option value="iec-long-time-inverse">
+Longo Inversa (LTI)</option>
+                                </optgroup>
+                                <optgroup label="Curvas ANSI/IEEE">
+                                    <option value="ansi-moderate-inverse">Moderadamente Inversa (MI)</option>
+                                    <option value="ansi-inverse">Inversa (I)</option>
+                                    <option value="ansi-very-inverse">Muito Inversa (VI)</option>
+                                    <option value="ansi-extremely-inverse">Extremamente Inversa (EI)</option>
+                                    <option value="ansi-short-time-inverse">Tempo Curto Inversa</option>
+                                    <option value="ansi-long-time-inverse">Tempo Longo Inversa</option>
+                                </optgroup>
+                                <optgroup label="Sem Curva">
+                                    <option value="set-time">Tempo Definido (TD)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pickup-current">Corrente de Pickup (A):</label>
+                            <input type="number" id="pickup-current" min="0.1" step="0.1" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="time-dial">Dial de Tempo:</label>
+                            <input type="number" id="time-dial" min="0.01" max="15" step="0.01" value="1" required>
+                        </div>
+                    </div>
+
+                    <div class="phases-grid">
+                        <div class="phase-card">
+                            <h4>Trip 1</h4>
+                            <div class="form-group">
+                                <label for="fault-current-a">Corrente de Falta :</label>
+                                <input type="number" id="fault-current-a" min="1" step="0.1" value="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="measured-time-a">Tempo Medido (s):</label>
+                                <input type="number" id="measured-time-a" min="0" step="0.01" placeholder="Tempo real medido">
+                            </div>
+                            <div id="time-comparison-a"></div>
+                        </div>
+
+                        <div class="phase-card">
+                            <h4>Trip 2</h4>
+                            <div class="form-group">
+                                <label for="fault-current-b">Corrente de Falta :</label>
+                                <input type="number" id="fault-current-b" min="1" step="0.1" value="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="measured-time-b">Tempo Medido (s):</label>
+                                <input type="number" id="measured-time-b" min="0" step="0.01" placeholder="Tempo real medido">
+                            </div>
+                            <div id="time-comparison-b"></div>
+                        </div>
+
+                        <div class="phase-card">
+                            <h4>Trip 3</h4>
+                            <div class="form-group">
+                                <label for="fault-current-c">Corrente de Falta :</label>
+                                <input type="number" id="fault-current-c" min="1" step="0.1" value="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="measured-time-c">Tempo Medido (s):</label>
+                                <input type="number" id="measured-time-c" min="0" step="0.01" placeholder="Tempo real medido">
+                            </div>
+                            <div id="time-comparison-c"></div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button onclick="generateCurve()" class="calculate-btn">
+                            <span class="btn-icon">⚡</span>
+                            Gerar Curva
+                        </button>
+                        <button onclick="generateReport()" class="submit-btn">
+                            <span class="btn-icon">📋</span>
+                            Gerar Relatório
+                        </button>
+                    </div>
+                </div>
+
+                <div class="results-section">
+                    <div class="chart-container">
+                        <canvas id="curveChart"></canvas>
+                    </div>
+                    <div class="results-table">
+                        <h4>Pontos da Curva</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>I/Ip</th>
+                                    <th>Corrente (A)</th>
+                                    <th>Tempo (s)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-body"></tbody>
+                        </table>
+                    </div>
+                    <button class="tab-button" data-tab="print-report">
+                <span class="tab-icon">🖨️</span>
+                Imprimir Relatório
+            </button>
+                </div>
+                
+            </section>
+
+            <section id="print-report" class="tab-content">
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3>Buscar Relatório</h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="search-serial">Buscar por Número de Série:</label>
+                        <div class="search-input-group">
+                            <input type="text" id="search-serial" placeholder="Digite o número de série">
+                            <button onclick="searchReports()" class="calculate-btn">
+                                <span class="btn-icon">🔍</span>
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="results-table">
+                    <h4>Relatórios Encontrados</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Modelo</th>
+                                <th>Número de Série</th>
+                                <th>Tipo de Ensaio</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reports-body"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Sistema de Ensaios de Relés de Proteção - Versão 1.3 - Rogério Pinheiro 2025</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
